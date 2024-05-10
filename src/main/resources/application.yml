@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: KusHouse-backend
+  datasource:
+    url: jdbc:mysql://localhost:3306/kusHouse?useSSL=false&serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  jwt:
+    secret: "testajfhahsfkasfkajsfadsfnalralksfjlajstknfkljasfnakljfkasnrksnfksnka"
