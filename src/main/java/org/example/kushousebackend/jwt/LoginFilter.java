@@ -7,6 +7,7 @@ import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.kushousebackend.data.dto.CustomUserDetails;
 import org.example.kushousebackend.data.dto.LoginDto;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,7 +22,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Iterator;
-
+@Slf4j
 @RequiredArgsConstructor
 public class LoginFilter  extends UsernamePasswordAuthenticationFilter {
 
@@ -42,13 +43,14 @@ public class LoginFilter  extends UsernamePasswordAuthenticationFilter {
             loginDto = objectMapper.readValue(messageBody, LoginDto.class);
 
         } catch (IOException e) {
+            log.error("{} 로그인 요청 fail",loginDto.getUsername());
             throw new RuntimeException(e);
         }
 
         String username = loginDto.getUsername();
         String password = loginDto.getPassword();
 
-        System.out.println("username = " + username + ", password = " + password);
+        log.info("username: {} 로그인 요청",username);
 
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password, null);
 

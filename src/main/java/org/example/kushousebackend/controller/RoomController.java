@@ -6,6 +6,7 @@ import org.example.kushousebackend.service.RoomService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,10 @@ public class RoomController {
     @GetMapping("/rooms")
     public ResponseEntity<List<RoomDto>> getAllRooms(){
         return ResponseEntity.ok().body(roomService.getAllRooms());
+    }
+    @GetMapping("/room/{id}")
+    public ResponseEntity<RoomDto> getRoomById(@PathVariable Long id){
+        return ResponseEntity.ok().body(roomService.getRoomById(id));
     }
 
     @PostMapping("/room")

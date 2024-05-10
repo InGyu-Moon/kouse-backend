@@ -32,6 +32,12 @@ public class RoomService {
 
         roomRepository.save(roomEntity);
     }
+
+    public RoomDto getRoomById(Long id){
+        RoomEntity entity = roomRepository.getRoomEntityByRoomId(id);
+        return convertToDTO(entity);
+    }
+
     public List<RoomDto> getAllRooms() {
         List<RoomEntity> rooms = roomRepository.findAll();
         return rooms.stream()
