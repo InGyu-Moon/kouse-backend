@@ -26,6 +26,7 @@ public class RoomService {
         roomEntity.setRoomCost(roomDto.getRoomCost());
         roomEntity.setRoomOption(roomDto.getRoomOption());
         roomEntity.setRoomDetail(roomDto.getRoomDetail());
+        roomEntity.setRoomLocation(roomDto.getRoomLocation());
 
         MemberEntity memberEntity = memberRepository.findById(roomDto.getMemberId()).orElse(null);
         roomEntity.setMember(memberEntity);
@@ -54,6 +55,8 @@ public class RoomService {
         dto.setRoomCost(roomEntity.getRoomCost());
         dto.setRoomOption(roomEntity.getRoomOption());
         dto.setRoomDetail(roomEntity.getRoomDetail());
+        dto.setRoomLocation(roomEntity.getRoomLocation());
+
         return dto;
     }
 }

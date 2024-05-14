@@ -15,4 +15,5 @@ public class RoomDto {
     private String roomOption;
     private String roomDetail;
     private Long memberId;
+    private String roomLocation;
 }

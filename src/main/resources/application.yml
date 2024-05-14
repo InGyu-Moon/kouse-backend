@@ -12,6 +12,7 @@ spring:
     import: mysql.yml
 
 
+
 #spring:
 #  datasource:
 #    url: jdbc:mysql://localhost:3306/kusHouse?useSSL=false&serverTimezone=Asia/Seoul
