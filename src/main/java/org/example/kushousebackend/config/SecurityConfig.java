@@ -52,7 +52,10 @@ public class SecurityConfig {
         // 경로별 인가 작업
         http
                 .authorizeHttpRequests((auth)->auth
-                        .requestMatchers("/","/login","/api/v1/join").permitAll()
+                        //TODO
+                        // 프론트 로그인 구현 전까지 일단 모든 요청 허용, 나중에 다시 설정하기
+                        .requestMatchers("/**").permitAll() 
+                        .requestMatchers("/","/login","/join").permitAll()
                         .requestMatchers("/api/v1/**").hasAnyRole("USER","ADMIN")
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated());
