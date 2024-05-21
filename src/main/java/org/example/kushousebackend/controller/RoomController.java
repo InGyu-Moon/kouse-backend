@@ -63,8 +63,6 @@ public class RoomController {
             roomDto.setImgAmount(imgArr.size());
             roomDto.setImgUrl(uuid);
         }
-
-        //TODO room Entity에 imgUrl,imgAmount 추가
         roomService.insertRoom(roomDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("생성완료");
     }

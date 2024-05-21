@@ -58,7 +58,8 @@ public class RoomService {
         dto.setRoomOption(roomEntity.getRoomOption());
         dto.setRoomDetail(roomEntity.getRoomDetail());
         dto.setRoomLocation(roomEntity.getRoomLocation());
-
+        dto.setImgUrl(roomEntity.getImgUrl());
+        dto.setImgAmount(roomEntity.getImgAmount());
         return dto;
     }
 }
