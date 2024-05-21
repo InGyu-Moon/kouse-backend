@@ -26,6 +26,8 @@ public class RoomEntity {
     private String roomOption;
     private String roomDetail;
     private String roomLocation;
+    private String imgUrl;
+    private int imgAmount;
 
     @ManyToOne
     @JoinColumn(name = "member_id")

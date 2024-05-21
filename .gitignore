@@ -1,4 +1,5 @@
 mysql.yml
+#src/main/webapp/image
 
 HELP.md
 .gradle
