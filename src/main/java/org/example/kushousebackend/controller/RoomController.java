@@ -37,6 +37,7 @@ public class RoomController {
         return ResponseEntity.ok().body(roomService.getRoomById(id));
     }
 
+
     @PostMapping("/room")
     public ResponseEntity<String> insertRoom(
             @RequestPart RoomDto roomDto,
@@ -45,25 +46,15 @@ public class RoomController {
 
         String path=request.getSession().getServletContext().getRealPath("/image");
 
-        if(imgArr==null){
-            roomDto.setImgAmount(0);
-            roomDto.setImgUrl(null);
-        } else{
-            String uuid= UUID.randomUUID().toString();
-            for(int i=0;i<imgArr.size();i++){
-                MultipartFile img = imgArr.get(i);
-                try {
-                    String realPath = path + "\\" + uuid + "_" + (i + 1) + "."
-                            + img.getOriginalFilename().substring(img.getOriginalFilename().lastIndexOf('.') + 1);
-                    img.transferTo(new File(realPath));
-                } catch (Exception e) {
-                    System.out.println("file upload error = " + e);
-                }
-            }
-            roomDto.setImgAmount(imgArr.size());
-            roomDto.setImgUrl(uuid);
-        }
+        roomDto.setHasImg(imgArr != null);
         roomService.insertRoom(roomDto);
+
+        if (imgArr != null) {
+            roomService.insertImg(imgArr, path, roomDto.getRoomId());
+        }
+
+
         return ResponseEntity.status(HttpStatus.CREATED).body("생성완료");
     }
+
 }

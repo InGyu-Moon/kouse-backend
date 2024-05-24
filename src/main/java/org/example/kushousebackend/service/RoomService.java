@@ -1,14 +1,21 @@
 package org.example.kushousebackend.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.kushousebackend.data.dto.ImgDto;
 import org.example.kushousebackend.data.dto.RoomDto;
+import org.example.kushousebackend.data.entity.ImgEntity;
 import org.example.kushousebackend.data.entity.MemberEntity;
 import org.example.kushousebackend.data.entity.RoomEntity;
+import org.example.kushousebackend.data.repository.ImgRepository;
 import org.example.kushousebackend.data.repository.MemberRepository;
 import org.example.kushousebackend.data.repository.RoomRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,6 +23,7 @@ import java.util.stream.Collectors;
 public class RoomService {
     private final RoomRepository roomRepository;
     private final MemberRepository memberRepository;
+    private final ImgRepository imgRepository;
 
     public void insertRoom(RoomDto roomDto) {
         RoomEntity roomEntity = new RoomEntity();
@@ -27,14 +35,35 @@ public class RoomService {
         roomEntity.setRoomOption(roomDto.getRoomOption());
         roomEntity.setRoomDetail(roomDto.getRoomDetail());
         roomEntity.setRoomLocation(roomDto.getRoomLocation());
-        roomEntity.setImgUrl(roomDto.getImgUrl());
-        roomEntity.setImgAmount(roomDto.getImgAmount());
 
         MemberEntity memberEntity = memberRepository.findById(roomDto.getMemberId()).orElse(null);
         roomEntity.setMember(memberEntity);
-
+        roomEntity.setHasImg(roomDto.isHasImg());
         roomRepository.save(roomEntity);
     }
+
+    public void insertImg(ArrayList<MultipartFile> imgArr, String path, Long roomId) {
+        RoomEntity roomEntity = roomRepository.getRoomEntityByRoomId(roomId);
+        String uuid= UUID.randomUUID().toString();
+        for(int i=0;i<imgArr.size();i++){
+            MultipartFile img = imgArr.get(i);
+            try {
+                String fileName = uuid + "_" + (i + 1) + "." + img.getOriginalFilename().substring(img.getOriginalFilename().lastIndexOf('.') + 1);
+                String realPath = path + "\\" + fileName;
+
+                img.transferTo(new File(realPath));
+                ImgEntity imgEntity = new ImgEntity();
+                imgEntity.setImgName(fileName);
+                imgEntity.setRoom(roomEntity);
+                imgRepository.save(imgEntity);
+            } catch (Exception e) {
+                System.out.println("file upload error = " + e);
+            }
+        }
+    }
+
+
+
 
     public RoomDto getRoomById(Long id){
         RoomEntity entity = roomRepository.getRoomEntityByRoomId(id);
@@ -58,8 +87,10 @@ public class RoomService {
         dto.setRoomOption(roomEntity.getRoomOption());
         dto.setRoomDetail(roomEntity.getRoomDetail());
         dto.setRoomLocation(roomEntity.getRoomLocation());
-        dto.setImgUrl(roomEntity.getImgUrl());
-        dto.setImgAmount(roomEntity.getImgAmount());
+        dto.setHasImg(roomEntity.isHasImg());
         return dto;
     }
+
+
+
 }

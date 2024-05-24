@@ -16,6 +16,5 @@ public class RoomDto {
     private String roomDetail;
     private Long memberId;
     private String roomLocation;
-    private String imgUrl;
-    private int imgAmount;
+    private boolean hasImg;
 }

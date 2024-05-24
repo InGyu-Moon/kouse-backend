@@ -11,28 +11,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "ROOM_INFO")
+@Table(name = "ROOM_IMG")
 @Getter
 @Setter
-public class RoomEntity {
+public class ImgEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long roomId;
-    private String roomName;
-    private String roomAddress;
-    private int roomDeposit;
-    private String roomPaymentType;
-    private int roomCost;
-    private String roomOption;
-    private String roomDetail;
-    private String roomLocation;
-    private boolean hasImg;
-
-
+    private Long imgId;
+    private String imgName;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
-    private MemberEntity member;
-
+    @JoinColumn(name = "room_id")
+    private RoomEntity room;
 
 }

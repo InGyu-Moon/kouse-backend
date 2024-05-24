@@ -3,7 +3,7 @@ spring:
     name: KusHouse-backend
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create-drop
     show-sql: true
   jwt:
     secret: "testajfhahsfkasfkajsfadsfnalralksfjlajstknfkljasfnakljfkasnrksnfksnka"
