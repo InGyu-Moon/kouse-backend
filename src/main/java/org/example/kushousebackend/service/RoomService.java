@@ -53,7 +53,12 @@ public class RoomService {
             MultipartFile img = imgArr.get(i);
             try {
                 String fileName = uuid + "_" + (i + 1) + "." + img.getOriginalFilename().substring(img.getOriginalFilename().lastIndexOf('.') + 1);
-                String realPath = path + "\\" + fileName;
+
+//                String realPath = path + "\\" + fileName;
+                String realPath = path + "/" + fileName;
+
+//                System.out.println("path = " + path);
+//                System.out.println("realPath = " + realPath);
 
                 img.transferTo(new File(realPath));
                 ImgEntity imgEntity = new ImgEntity();

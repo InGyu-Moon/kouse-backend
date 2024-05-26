@@ -50,7 +50,11 @@ public class RoomController {
             @RequestPart(value = "roomImg",required = false) ArrayList<MultipartFile> imgArr,
             HttpServletRequest request) {
 
-        String path=request.getSession().getServletContext().getRealPath("/image");
+//        String path=request.getSession().getServletContext().getRealPath("/image");
+
+        String projectRootPath = System.getProperty("user.dir");
+        String path = projectRootPath.toString();
+        path += "/image";
 
         roomDto.setHasImg(imgArr != null);
         roomService.insertRoom(roomDto,imgArr, path);
@@ -66,7 +70,13 @@ public class RoomController {
     @GetMapping("/image/{filename}")
     public ResponseEntity<Resource> getImage(@PathVariable String filename) {
         try {
-            Path filePath = Paths.get("src/main/webapp/image/" + filename).toAbsolutePath().normalize();
+//            Path filePath = Paths.get("src/main/webapp/image/" + filename).toAbsolutePath().normalize();
+            Path filePath = Paths.get("./image/" + filename).toAbsolutePath().normalize();
+
+
+//            System.out.println("filePath = " + filePath);
+
+
             Resource resource = new UrlResource(filePath.toUri());
 
             if (resource.exists()) {

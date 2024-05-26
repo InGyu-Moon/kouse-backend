@@ -14,9 +14,12 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:3000")
                 .allowedMethods("*");
     }
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/image/**")
-                .addResourceLocations("file:src/main/webapp/image/");
-    }
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/image/**")
+//                .addResourceLocations("file:./image/");
+////                .addResourceLocations("file:///image/");
+////                .addResourceLocations("file:/image/");
+//
+//    }
 }
