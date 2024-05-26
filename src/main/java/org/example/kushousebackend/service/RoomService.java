@@ -25,7 +25,7 @@ public class RoomService {
     private final MemberRepository memberRepository;
     private final ImgRepository imgRepository;
 
-    public void insertRoom(RoomDto roomDto) {
+    public void insertRoom(RoomDto roomDto, ArrayList<MultipartFile> imgArr, String path) {
         RoomEntity roomEntity = new RoomEntity();
         roomEntity.setRoomName(roomDto.getRoomName());
         roomEntity.setRoomAddress(roomDto.getRoomAddress());
@@ -40,6 +40,10 @@ public class RoomService {
         roomEntity.setMember(memberEntity);
         roomEntity.setHasImg(roomDto.isHasImg());
         roomRepository.save(roomEntity);
+
+        if (roomDto.isHasImg()) {
+            insertImg(imgArr, path, roomEntity.getRoomId());
+        }
     }
 
     public void insertImg(ArrayList<MultipartFile> imgArr, String path, Long roomId) {
@@ -92,5 +96,10 @@ public class RoomService {
     }
 
 
-
+    public List<String> getRoomImg(Long roomId) {
+        RoomEntity room = roomRepository.getRoomEntityByRoomId(roomId);
+        List<String> imgList = new ArrayList<>();
+        imgRepository.findByRoom(room).forEach(img -> imgList.add(img.getImgName()));
+        return imgList;
+    }
 }
